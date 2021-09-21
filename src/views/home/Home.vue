@@ -1,28 +1,21 @@
 <script setup>
-const title = "Howie's website";
-
-const imgSrc = (src) => {
-  const path = `./img/${src}`;
-  const modules = import.meta.globEager("./img/*");
-  return modules[path].default;
-};
+import Banner from "./Banner.vue";
+import Intro from "./Intro.vue";
+import LatestPosts from "./LatestPosts.vue";
+import Works from "./Works.vue";
+import Rightbar from "./Rightbar.vue";
 </script>
 
 <template>
-  <div class="relative">
-    <img class="w-full h-96" :src="imgSrc('banner.jpg')" alt="banner" />
-    <p
-      class="
-        absolute
-        top-1/2
-        left-1/2
-        -translate-x-1/2 -translate-y-1/2
-        font-black
-        tracking-widest
-        text-white text-3xl
-      "
-    >
-      {{ title }}
-    </p>
+  <div>
+    <Banner />
+    <section class="lg:flex p-4">
+      <main class="lg:w-lg lg:mx-auto p-4">
+        <Intro />
+        <LatestPosts />
+        <Works />
+      </main>
+      <Rightbar class="flex-shrink-0" />
+    </section>
   </div>
 </template>

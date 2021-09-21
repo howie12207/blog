@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .indent-2 {
+    text-indent: 2rem;
+  }
+  .decoration {
+    @apply relative pl-5 before:absolute before:top-0 before:bottom-0 before:left-0 before:w-1.5 before:bg-yellow-600;
+  }
+}
+
 .fade-enter-active,
 .fade-leave-active {
   opacity: 1;
