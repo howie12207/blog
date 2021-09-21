@@ -19,6 +19,7 @@ const imgSrc = (src) => {
       class="
         w-full
         h-full
+        overflow-hidden
         xl:w-xl
         px-2
         mx-auto
