@@ -1,6 +1,4 @@
 <script setup>
-import { computed } from "vue";
-
 import sorts from "@/assets/sorts.json";
 import sortsBg from "@/assets/sortsBg.json";
 import latestPosts from "@/assets/articles.json";

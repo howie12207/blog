@@ -56,7 +56,14 @@ const imgSrc = (src) => {
     </div>
     <div class="my-8">
       <h3 class="font-black text-lg pb-4 mb-4 border-b">Contact</h3>
-      <div class="flex flex-wrap gap-2"></div>
+      <div class="flex flex-wrap gap-4">
+        <a href="mailto:howie12207@gmail.com"
+          ><img :src="imgSrc('email.svg')" alt="email"
+        /></a>
+        <a href="https://github.com/howie12207" target="_blank"
+          ><img :src="imgSrc('github.svg')" alt="github"
+        /></a>
+      </div>
     </div>
   </aside>
 </template>
