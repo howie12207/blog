@@ -1,9 +1,24 @@
 <script setup>
+import { computed } from "vue";
+
+import sorts from "@/assets/sorts.json";
 import sortsBg from "@/assets/sortsBg.json";
 import latestPosts from "@/assets/articles.json";
 
+import IconChevron from "@/components/icon/IconChevron.vue";
+
 import { toDateFormat } from "@/utils/format.js";
 
+const sortsFilter = sorts.map((item, index) => ({
+  ...item,
+  bg: sortsBg[index],
+}));
+
+const bg = (sort) => {
+  return (
+    sortsFilter.find((item) => item.label === sort)?.bg || "rgb(248, 113, 113)"
+  );
+};
 const imgSrc = (src) => {
   const path = `./img/${src}`;
   const modules = import.meta.globEager("./img/*");
@@ -14,45 +29,68 @@ const imgSrc = (src) => {
 <template>
   <div>
     <h1 class="decoration font-black text-3xl mb-8">Latest Posts</h1>
-    <div class="grid sm:grid-cols-2 gap-4">
-      <router-link
-        to="/"
-        class="border rounded overflow-hidden transition-all group hover:shadow"
-        v-for="(recent, index) of latestPosts"
-        :key="recent.id"
-      >
-        <img
-          class="w-full transition-all group-hover:opacity-80"
-          :src="imgSrc(`sample_0${index + 1}.jpg`)"
-          alt="article"
-        />
-        <div class="p-4">
-          <div class="flex gap-x-4 items-center my-2">
-            <span class="flex flex-wrap gap-x-1 gap-y-1 flex-grow">
-              <span
-                :class="[
-                  'p-0.5 text-white text-sm rounded-sm',
-                  sortsBg[tag] || 'bg-red-500',
-                ]"
-                v-for="tag of recent.tags"
-                :key="tag"
-                >{{ tag }}</span
-              >
-            </span>
-            <span class="flex-shrink-0 w-20 text-xs">{{
-              toDateFormat(recent.time)
-            }}</span>
-          </div>
-          <p
-            class="
-              transition-all
-              group-hover:underline group-hover:text-yellow-700
-            "
-          >
-            {{ recent.title }}
-          </p>
+    <div
+      class="
+        md:flex
+        mb-8
+        border
+        rounded
+        overflow-hidden
+        transition-all
+        hover:shadow
+      "
+      v-for="(recent, index) of latestPosts"
+      :key="recent.id"
+    >
+      <!-- 圖片 -->
+      <img
+        class="md:w-1/2"
+        :src="imgSrc(`sample_0${index + 1}.jpg`)"
+        alt="article"
+      />
+      <div class="flex-grow p-4 overflow-hidden">
+        <div class="flex flex-wrap items-center gap-x-2 my-2">
+          <!-- 日期 -->
+          <span class="flex-shrink-0 w-18 text-xs">{{
+            toDateFormat(recent.time)
+          }}</span>
+          -
+          <!-- Tags -->
+          <span class="flex flex-wrap gap-x-1 gap-y-1 flex-grow">
+            <span
+              v-for="tag of recent.tags"
+              :style="{ backgroundColor: bg(tag) }"
+              :key="tag"
+              :class="['p-0.5 text-white text-sm rounded-sm']"
+              >{{ tag }}</span
+            >
+          </span>
         </div>
-      </router-link>
+        <!-- 標題 -->
+        <p
+          class="
+            font-bold
+            md:text-2xl
+            text-yellow-700
+            mb-4
+            overflow-ellipsis overflow-hidden
+            line-clamp-2
+          "
+        >
+          {{ recent.title }}
+        </p>
+        <!-- 內容 -->
+        <div class="h-36 overflow-hidden" v-html="recent.content"></div>
+        <router-link
+          class="flex w-32 items-center mt-8 hover:underline group"
+          to="/"
+          >READ MORE<IconChevron
+            :size="14"
+            class="ml-3 group-hover:animate-bounce"
+            direction="right"
+          />
+        </router-link>
+      </div>
     </div>
     <div class="text-center my-4">
       <router-link

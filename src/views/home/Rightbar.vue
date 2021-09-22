@@ -1,5 +1,11 @@
 <script setup>
+import sorts from "@/assets/sorts.json";
 import sortsBg from "@/assets/sortsBg.json";
+
+const sortsFilter = sorts.map((item, index) => ({
+  ...item,
+  bg: sortsBg[index],
+}));
 
 const introMeData = "Hello! I'm Howie, a front-end engineer for about 2 years.";
 
@@ -38,13 +44,13 @@ const imgSrc = (src) => {
       <div class="flex flex-wrap gap-2">
         <router-link
           to="/"
-          v-for="(value, key) in sortsBg"
-          :key="key"
+          v-for="sort of sortsFilter"
+          :key="sort.id"
+          :style="{ backgroundColor: sort.bg }"
           :class="[
             'text-white p-1 rounded-sm transition-all hover:bg-opacity-80',
-            value,
           ]"
-          >{{ key }}</router-link
+          >{{ sort.label }}</router-link
         >
       </div>
     </div>
