@@ -1,10 +1,22 @@
 <script setup>
-import latestPosts from "@/assets/articles.json";
-import SortsBox from "@/components/layouts/sortsBox/SortsBox.vue";
+import { ref, onMounted } from "vue";
 
+// import latestPosts from "@/assets/articles.json";
+import SortsBox from "@/components/layouts/sortsBox/SortsBox.vue";
 import IconChevron from "@/components/icon/IconChevron.vue";
 
+import { fetchArticles } from "@/api/article.js";
 import { toDateFormat } from "@/utils/format.js";
+
+onMounted(() => {
+  getArticles();
+});
+const latestPosts = ref([]);
+
+const getArticles = async () => {
+  const res = (await fetchArticles({ page: 0, size: 6 })) || {};
+  latestPosts.value = res.content;
+};
 
 const imgSrc = (src) => {
   const path = `./img/${src}`;
@@ -39,11 +51,11 @@ const imgSrc = (src) => {
         <div class="flex flex-wrap items-center gap-x-2 my-2">
           <!-- 日期 -->
           <span class="flex-shrink-0 w-18 text-xs">{{
-            toDateFormat(recent.time)
+            toDateFormat(recent.updateTime)
           }}</span>
           -
           <!-- Tags -->
-          <SortsBox :tags="recent.tags" />
+          <SortsBox :tags="recent.sorts" />
         </div>
         <!-- 標題 -->
         <p
@@ -56,13 +68,13 @@ const imgSrc = (src) => {
             line-clamp-2
           "
         >
-          {{ recent.title }}
+          {{ recent.name }}
         </p>
         <!-- 內容 -->
         <div class="h-36 overflow-hidden" v-html="recent.content"></div>
         <router-link
           class="flex w-32 items-center mt-8 hover:underline group"
-          to="/"
+          :to="`/articles/${recent._id}`"
           >READ MORE<IconChevron
             :size="14"
             class="ml-3 group-hover:animate-bounce"

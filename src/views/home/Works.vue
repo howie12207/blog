@@ -1,13 +1,18 @@
 <script setup>
-import worksList from "@/assets/works.json";
+import { ref, onMounted } from "vue";
+import { fetchWorks } from "@/api/works";
+
+onMounted(() => {
+  getWorks();
+});
+const worksList = ref([]);
+
+const getWorks = async () => {
+  const res = await fetchWorks();
+  worksList.value = res;
+};
 
 const btns = ["Code", "Demo"];
-
-const imgSrc = (src) => {
-  const path = `./img/${src}`;
-  const modules = import.meta.globEager("./img/*");
-  return modules[path].default;
-};
 </script>
 
 <template>
@@ -17,13 +22,13 @@ const imgSrc = (src) => {
       <div
         class="border rounded overflow-hidden transition-all group hover:shadow"
         v-for="(works, index) of worksList"
-        :key="works.id"
+        :key="works._id"
       >
         <div class="relative">
           <img
-            class="w-full transition-all group-hover:blur-sm"
-            :src="imgSrc(`sample_0${index + 1}.jpg`)"
-            alt="article"
+            class="w-full h-80 object-cover transition-all group-hover:blur-sm"
+            :src="works.img"
+            :alt="works.name"
           />
           <div
             class="
@@ -53,7 +58,7 @@ const imgSrc = (src) => {
         </div>
         <div class="p-4">
           <router-link to="/" class="text-red-800 text-xl mb-2 hover:underline">
-            {{ works.title }}
+            {{ works.name }}
           </router-link>
           <div v-html="works.content"></div>
         </div>
