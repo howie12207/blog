@@ -2,7 +2,7 @@
 import { toDateFormat } from "@/utils/format.js";
 
 import IconChevron from "@/components/icon/IconChevron.vue";
-import SortsBox from "@/components/layouts/sortsBox/SortsBox.vue";
+import SortsBox from "@/components/pages/sortsBox/SortsBox.vue";
 
 defineProps({
   article: {

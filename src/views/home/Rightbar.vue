@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import SortsBox from "@/components/layouts/sortsBox/SortsBox.vue";
+import SortsBox from "@/components/pages/sortsBox/SortsBox.vue";
 
 import { fetchSorts } from "@/api/sort.js";
 

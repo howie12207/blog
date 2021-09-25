@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 
-import SortsBox from "@/components/layouts/sortsBox/SortsBox.vue";
+import SortsBox from "@/components/pages/sortsBox/SortsBox.vue";
 import IconChevron from "@/components/icon/IconChevron.vue";
 
 import { fetchArticles } from "@/api/article.js";
