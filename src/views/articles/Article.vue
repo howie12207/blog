@@ -1,0 +1,105 @@
+<script setup>
+import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { fetchArticle } from "@/api/article";
+import { toDateFormat } from "@/utils/format.js";
+
+const route = useRoute();
+
+const article = ref({});
+
+onMounted(() => {
+  getArticle();
+});
+
+const getArticle = async () => {
+  article.value = await fetchArticle(route.params.id);
+};
+</script>
+
+<template>
+  <div
+    class="
+      article
+      mx-4
+      p-4
+      lg:p-10
+      mt-4
+      bg-red-50
+      rounded
+      shadow
+      dark:bg-yellow-900 dark:text-red-200
+    "
+  >
+    <div class="lg:flex justify-between text-xs text-gray-500">
+      <p>
+        建立時間：
+        {{ toDateFormat(article.createTime) }}
+      </p>
+      <p>
+        最近一次更新時間：
+        {{ toDateFormat(article.updateTime) }}
+      </p>
+    </div>
+    <div class="text-3xl my-8 text-red-700 font-black dark:text-red-400">
+      {{ article.name }}
+    </div>
+    <div class="content" v-html="article.content"></div>
+    <div class="mt-12 text-yellow-700">
+      <span v-for="(item, index) in article.sorts" :key="index" class="mr-2"
+        >#{{ item }}</span
+      >
+    </div>
+    <!-- <div
+      class="
+        text-3xl
+        my-4
+        py-4
+        font-bold
+        border-solid border-t-4 border-b-4 border-light-blue-500
+        dark:border-yellow-700
+      "
+    >
+      留言區
+    </div>
+    <div
+      v-for="(comment, index) of comments"
+      :key="index"
+      class="p-4 my-4 bg-red-100 rounded shadow"
+    >
+      <p class="text-gray-500 font-bold">
+        {{ comment.account }}
+        <span class="text-xs text-gray-400"
+          >({{ toDateFormat(comment.createTime) }})</span
+        >
+      </p>
+      <p class="comment_content text-sm">{{ comment.content }}</p>
+    </div>
+    <textarea
+      v-model="commentText"
+      placeholder="請輸入留言內容"
+      class="
+        p-4
+        w-full
+        focus:outline-none
+        shadow
+        focus:ring-1
+        bg-gray-200
+        rounded
+        resize-none
+        transition-shadow
+        dark:bg-gray-700
+      "
+      rows="10"
+    ></textarea>
+    <div class="text-right">
+      <span class="btn btn-primary" @click="createComment">送出</span>
+    </div> -->
+  </div>
+</template>
+
+<style scoped>
+.comment_content {
+  text-indent: 2rem;
+}
+</style>

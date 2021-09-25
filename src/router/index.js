@@ -22,6 +22,18 @@ export const router = createRouter({
       },
     },
     {
+      path: "/articles/:id",
+      component: () => import("@/views/articles/Article.vue"),
+      meta: {
+        name: "Articles",
+        breadcrumbs: [
+          { name: "Home", url: "/" },
+          { name: "Articles", url: "articles" },
+          { name: "Article" },
+        ],
+      },
+    },
+    {
       path: "/sorts",
       component: () => import("@/views/sorts/Sorts.vue"),
       meta: {

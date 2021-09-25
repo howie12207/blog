@@ -21,7 +21,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     const res = response.data;
-    if (res.code === 200) return res;
+    if (res.code === 200) return res?.data;
     ElMessage({
       type: "error",
       message: res.message,
