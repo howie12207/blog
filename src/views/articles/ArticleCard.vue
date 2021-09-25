@@ -2,6 +2,7 @@
 import { toDateFormat } from "@/utils/format.js";
 
 import IconChevron from "@/components/icon/IconChevron.vue";
+import SortsBox from "@/components/layouts/sortsBox/SortsBox.vue";
 
 defineProps({
   article: {
@@ -13,26 +14,16 @@ defineProps({
 
 <template>
   <article
-    class="
-      text-xs
-      lg:text-sm
-      shadow-xl
-      bg-red-50
-      rounded
-      p-4
-      mt-4
-      mb-12
-      dark:bg-yellow-900 dark:text-red-200
-    "
+    class="text-xs lg:text-sm shadow-xl bg-red-50 rounded p-4 overflow-hidden"
   >
     <div class="text-right text-xs mb-2">
       {{ toDateFormat(article.createTime) }}
     </div>
-    <div class="text-xl mb-2 text-red-700 font-black dark:text-red-400">
+    <div class="text-xl mb-2 text-red-700 font-black">
       {{ article.name }}
     </div>
     <div
-      class="content overflow-hidden overflow-ellipsis max-h-40"
+      class="content overflow-hidden overflow-ellipsis line-clamp-6"
       v-html="article.content"
     ></div>
     <router-link
@@ -52,10 +43,6 @@ defineProps({
         class="ml-1 group-hover:animate-bounce"
         direction="right"
     /></router-link>
-    <div class="text-gray-500 text-xs dark:text-gray-300">
-      <span v-for="(item, index) in article.sorts" :key="index" class="mr-2"
-        >#{{ item }}</span
-      >
-    </div>
+    <SortsBox :tags="article.sorts" />
   </article>
 </template>
