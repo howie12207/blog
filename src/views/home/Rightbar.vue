@@ -1,11 +1,18 @@
 <script setup>
-import sorts from "@/assets/sorts.json";
-import sortsBg from "@/assets/sortsBg.json";
+import { ref, onMounted } from "vue";
+import SortsBox from "@/components/layouts/sortsBox/SortsBox.vue";
 
-const sortsFilter = sorts.map((item, index) => ({
-  ...item,
-  bg: sortsBg[index],
-}));
+import { fetchSorts } from "@/api/sort.js";
+
+onMounted(() => {
+  getSorts();
+});
+
+const sorts = ref([]);
+const getSorts = async () => {
+  const res = (await fetchSorts()) || [];
+  sorts.value = res.map((item) => item.name);
+};
 
 const introMeData = "Hello! I'm Howie, a front-end engineer for about 2 years.";
 
@@ -41,18 +48,7 @@ const imgSrc = (src) => {
     </div>
     <div class="my-8">
       <h3 class="font-black text-lg pb-4 mb-4 border-b">Tags</h3>
-      <div class="flex flex-wrap gap-2">
-        <router-link
-          to="/"
-          v-for="sort of sortsFilter"
-          :key="sort.id"
-          :style="{ backgroundColor: sort.bg }"
-          :class="[
-            'text-white p-1 rounded-sm transition-all hover:bg-opacity-80',
-          ]"
-          >{{ sort.label }}</router-link
-        >
-      </div>
+      <SortsBox :tags="sorts" />
     </div>
     <div class="my-8">
       <h3 class="font-black text-lg pb-4 mb-4 border-b">Contact</h3>

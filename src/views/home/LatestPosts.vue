@@ -1,22 +1,11 @@
 <script setup>
-import sorts from "@/assets/sorts.json";
-import sortsBg from "@/assets/sortsBg.json";
 import latestPosts from "@/assets/articles.json";
+import SortsBox from "@/components/layouts/sortsBox/SortsBox.vue";
 
 import IconChevron from "@/components/icon/IconChevron.vue";
 
 import { toDateFormat } from "@/utils/format.js";
 
-const sortsFilter = sorts.map((item, index) => ({
-  ...item,
-  bg: sortsBg[index],
-}));
-
-const bg = (sort) => {
-  return (
-    sortsFilter.find((item) => item.label === sort)?.bg || "rgb(248, 113, 113)"
-  );
-};
 const imgSrc = (src) => {
   const path = `./img/${src}`;
   const modules = import.meta.globEager("./img/*");
@@ -54,15 +43,7 @@ const imgSrc = (src) => {
           }}</span>
           -
           <!-- Tags -->
-          <span class="flex flex-wrap gap-x-1 gap-y-1 flex-grow">
-            <span
-              v-for="tag of recent.tags"
-              :style="{ backgroundColor: bg(tag) }"
-              :key="tag"
-              :class="['p-0.5 text-white text-sm rounded-sm']"
-              >{{ tag }}</span
-            >
-          </span>
+          <SortsBox :tags="recent.tags" />
         </div>
         <!-- 標題 -->
         <p
