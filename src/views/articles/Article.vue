@@ -5,11 +5,10 @@ import { fetchArticle } from "@/api/article";
 import { toDateFormat } from "@/utils/format.js";
 
 const route = useRoute();
-
 const article = ref({});
 
-onMounted(() => {
-  getArticle();
+onMounted(async () => {
+  await getArticle();
 });
 
 const getArticle = async () => {
@@ -21,6 +20,7 @@ const getArticle = async () => {
   <div
     class="
       article
+      xl:w-xl xl:mx-auto
       mx-4
       p-4
       lg:p-10

@@ -25,10 +25,10 @@ export const router = createRouter({
       path: "/articles/:id",
       component: () => import("@/views/articles/Article.vue"),
       meta: {
-        name: "Articles",
+        name: "Article",
         breadcrumbs: [
           { name: "Home", url: "/" },
-          { name: "Articles", url: "articles" },
+          { name: "Articles", url: "/articles" },
           { name: "Article" },
         ],
       },

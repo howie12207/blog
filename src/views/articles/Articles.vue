@@ -30,25 +30,23 @@ const currentChange = (page) => {
 </script>
 
 <template>
-  <div class="p-2 sm:p-8">
-    <main>
-      <section class="grid lg:grid-cols-2 gap-8 mb-8">
-        <ArticleCard
-          v-for="article of dataList"
-          :article="article"
-          :key="article._id"
-        />
-      </section>
-      <el-pagination
-        v-if="total"
-        v-model:currentPage="currentPage"
-        class="text-center"
-        background
-        layout="prev, pager, next"
-        :total="total"
-        @currentChange="currentChange"
-      >
-      </el-pagination>
-    </main>
-  </div>
+  <main class="xl:w-xl xl:mx-auto p-2 sm:p-4">
+    <section class="grid lg:grid-cols-2 gap-8 mb-8">
+      <ArticleCard
+        v-for="article of dataList"
+        :article="article"
+        :key="article._id"
+      />
+    </section>
+    <el-pagination
+      v-if="total"
+      v-model:currentPage="currentPage"
+      class="text-center"
+      background
+      layout="prev, pager, next"
+      :total="total"
+      @currentChange="currentChange"
+    >
+    </el-pagination>
+  </main>
 </template>
