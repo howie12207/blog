@@ -18,7 +18,7 @@ const btns = ["Code", "Demo"];
 <template>
   <div>
     <h1 class="decoration font-black text-3xl mb-8">Works</h1>
-    <div class="grid sm:grid-cols-2 gap-4">
+    <div class="grid md:grid-cols-2 gap-4">
       <div
         class="border rounded overflow-hidden transition-all group hover:shadow"
         v-for="(works, index) of worksList"

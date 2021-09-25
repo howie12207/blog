@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
 
-// import latestPosts from "@/assets/articles.json";
 import SortsBox from "@/components/layouts/sortsBox/SortsBox.vue";
 import IconChevron from "@/components/icon/IconChevron.vue";
 
@@ -14,7 +13,7 @@ onMounted(() => {
 const latestPosts = ref([]);
 
 const getArticles = async () => {
-  const res = (await fetchArticles({ page: 0, size: 6 })) || {};
+  const res = (await fetchArticles({ page: 0, size: 4 })) || {};
   latestPosts.value = res.content;
 };
 
@@ -28,61 +27,41 @@ const imgSrc = (src) => {
 <template>
   <div>
     <h1 class="decoration font-black text-3xl mb-8">Latest Posts</h1>
-    <div
-      class="
-        md:flex
-        mb-8
-        border
-        rounded
-        overflow-hidden
-        transition-all
-        hover:shadow
-      "
-      v-for="(recent, index) of latestPosts"
-      :key="recent.id"
-    >
-      <!-- 圖片 -->
-      <img
-        class="md:w-1/2"
-        :src="imgSrc(`sample_0${index + 1}.jpg`)"
-        alt="article"
-      />
-      <div class="flex-grow p-4 overflow-hidden">
-        <div class="flex flex-wrap items-center gap-x-2 my-2">
-          <!-- 日期 -->
-          <span class="flex-shrink-0 w-18 text-xs">{{
-            toDateFormat(recent.updateTime)
-          }}</span>
-          -
-          <!-- Tags -->
-          <SortsBox :tags="recent.sorts" />
+    <section class="grid md:grid-cols-2 gap-4">
+      <div
+        class="relative border rounded overflow-hidden group"
+        v-for="(recent, index) of latestPosts"
+        :key="recent.id"
+      >
+        <img
+          class="w-full transition-all group-hover:blur-sm"
+          :src="imgSrc(`sample_0${index + 1}.jpg`)"
+          alt="article"
+        />
+        <div class="absolute text-white bottom-4 left-4">
+          <div class="flex flex-wrap items-center gap-x-2 my-2">
+            <span class="flex-shrink-0 w-18 text-xs">{{
+              toDateFormat(recent.updateTime)
+            }}</span>
+            -
+            <SortsBox :tags="recent.sorts" />
+          </div>
+          <router-link
+            :to="`/articles/${recent._id}`"
+            class="
+              font-bold
+              md:text-2xl
+              hover:underline
+              overflow-ellipsis overflow-hidden
+              line-clamp-2
+            "
+          >
+            {{ recent.name }}
+          </router-link>
         </div>
-        <!-- 標題 -->
-        <p
-          class="
-            font-bold
-            md:text-2xl
-            text-yellow-700
-            mb-4
-            overflow-ellipsis overflow-hidden
-            line-clamp-2
-          "
-        >
-          {{ recent.name }}
-        </p>
-        <!-- 內容 -->
-        <div class="h-36 overflow-hidden" v-html="recent.content"></div>
-        <router-link
-          class="flex w-32 items-center mt-8 hover:underline group"
-          :to="`/articles/${recent._id}`"
-          >READ MORE<IconChevron
-            :size="14"
-            class="ml-3 group-hover:animate-bounce"
-            direction="right"
-          />
-        </router-link>
       </div>
-    </div>
+    </section>
+
     <div class="text-center my-4">
       <router-link
         class="

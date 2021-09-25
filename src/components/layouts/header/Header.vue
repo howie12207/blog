@@ -14,37 +14,38 @@ const imgSrc = (src) => {
 </script>
 
 <template>
-  <div class="h-14 bg-gray-100">
-    <header
-      class="
-        w-full
-        h-full
-        overflow-hidden
-        xl:w-xl
-        px-2
-        mx-auto
-        flex
-        items-center
-        justify-between
-      "
-    >
-      <router-link to="/"
-        ><img class="w-8" :src="imgSrc('logo.png')" alt="logo" />
-      </router-link>
-      <ul class="flex">
-        <li
-          class="font-black mx-1 transition-all hover:text-yellow-700"
-          v-for="item of menu"
-          :key="item.id"
-        >
-          <router-link class="block px-2 py-4" :to="item.url">{{
-            item.label
-          }}</router-link>
-        </li>
-        <li class="relative flex items-center font-black mx-1 transition-all">
-          <IconMenu class="hover:text-yellow-700" />
-        </li>
-      </ul>
-    </header>
-  </div>
+  <header class="h-14 w-full">
+    <div class="fixed z-10 top-0 left-0 right-0 bg-gray-100">
+      <div
+        class="
+          overflow-hidden
+          xl:w-xl
+          px-2
+          mx-auto
+          flex
+          items-center
+          justify-between
+          z-10
+        "
+      >
+        <router-link to="/"
+          ><img class="w-8" :src="imgSrc('logo.png')" alt="logo" />
+        </router-link>
+        <ul class="flex">
+          <li
+            class="font-black mx-1 transition-all hover:text-yellow-700"
+            v-for="item of menu"
+            :key="item.id"
+          >
+            <router-link class="block px-2 py-4" :to="item.url">{{
+              item.label
+            }}</router-link>
+          </li>
+          <li class="relative flex items-center font-black mx-1 transition-all">
+            <IconMenu class="hover:text-yellow-700" />
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
 </template>
