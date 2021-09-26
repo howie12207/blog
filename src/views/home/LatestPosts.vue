@@ -2,7 +2,6 @@
 import { ref, onMounted } from "vue";
 
 import SortsBox from "@/components/pages/sortsBox/SortsBox.vue";
-import IconChevron from "@/components/icon/IconChevron.vue";
 
 import { fetchArticles } from "@/api/article.js";
 import { toDateFormat } from "@/utils/format.js";

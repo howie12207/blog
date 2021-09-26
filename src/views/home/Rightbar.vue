@@ -1,8 +1,14 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import SortsBox from "@/components/pages/sortsBox/SortsBox.vue";
-
 import { fetchSorts } from "@/api/sort.js";
+
+defineProps({
+  about: {
+    type: Object,
+    default: () => ({}),
+  },
+});
 
 onMounted(() => {
   getSorts();
@@ -13,8 +19,6 @@ const getSorts = async () => {
   const res = (await fetchSorts()) || [];
   sorts.value = res.map((item) => item.name);
 };
-
-const introMeData = "Hello! I'm Howie, a front-end engineer for about 2 years.";
 
 const imgSrc = (src) => {
   const path = `./img/${src}`;
@@ -44,8 +48,8 @@ const imgSrc = (src) => {
           :src="imgSrc('avatar.jpg')"
           alt="avatar"
         />
-        <p class="font-black text-xl mt-10 mb-4">Howie Chen</p>
-        <p class="text-gray-700 leading-7">{{ introMeData }}</p>
+        <p class="font-black text-xl mt-10 mb-4">{{ about.name }}</p>
+        <p class="text-gray-700 leading-7">{{ about.title }}</p>
       </div>
       <div class="my-8">
         <h3 class="font-black text-lg pb-4 mb-4 border-b">Tags</h3>
@@ -54,10 +58,10 @@ const imgSrc = (src) => {
       <div class="my-8">
         <h3 class="font-black text-lg pb-4 mb-4 border-b">Contact</h3>
         <div class="flex flex-wrap gap-4">
-          <a href="mailto:howie12207@gmail.com"
+          <a :href="`mailto:${about.email}`"
             ><img :src="imgSrc('email.svg')" alt="email"
           /></a>
-          <a href="https://github.com/howie12207" target="_blank"
+          <a :href="about.pathGithub" target="_blank"
             ><img :src="imgSrc('github.svg')" alt="github"
           /></a>
         </div>

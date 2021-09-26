@@ -1,6 +1,10 @@
 <script setup>
-const introData =
-  "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis officia laboriosam velit quod quidem aut iure ad praesentium amet facilis odio labore sunt dicta voluptatibus maxime corporis laborum, accusamus adipisci.";
+defineProps({
+  introData: {
+    type: String,
+    default: "",
+  },
+});
 </script>
 
 <template>

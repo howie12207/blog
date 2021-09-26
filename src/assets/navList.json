@@ -7,13 +7,6 @@
     "icon": ""
   },
   {
-    "id": 2,
-    "order": 2,
-    "label": "SORTS",
-    "url": "/sorts",
-    "icon": ""
-  },
-  {
     "id": 3,
     "order": 3,
     "label": "WORKS",
@@ -25,13 +18,6 @@
     "order": 4,
     "label": "ABOUT",
     "url": "/about",
-    "icon": ""
-  },
-  {
-    "id": 5,
-    "order": 5,
-    "label": "CONTACT",
-    "url": "/contact",
     "icon": ""
   },
   {
