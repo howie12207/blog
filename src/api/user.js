@@ -10,7 +10,7 @@ export function login(data) {
 
 export function register(data) {
   return request({
-    url: "/login",
+    url: "/register",
     method: "post",
     data,
   });
@@ -19,7 +19,7 @@ export function register(data) {
 export function fetchUserInfo(data) {
   return request({
     url: "/info",
-    method: "post",
+    method: "get",
     data,
   });
 }

@@ -1,6 +1,6 @@
 import axios from "axios";
-
 import { ElMessage } from "element-plus";
+import { getToken, removeToken } from "@/utils/auth";
 
 const service = axios.create({
   baseURL: "http://localhost:3001",
@@ -9,6 +9,10 @@ const service = axios.create({
 
 service.interceptors.request.use(
   (config) => {
+    const access = getToken();
+    if (access) {
+      config.headers["X-Token"] = access;
+    }
     return config;
   },
   (error) => {
@@ -22,6 +26,9 @@ service.interceptors.response.use(
   (response) => {
     const res = response.data;
     if (res.code === 200) return res?.data;
+    if (res.code === 401) {
+      removeToken();
+    }
     ElMessage({
       type: "error",
       message: res.message,
