@@ -4,7 +4,6 @@ import Mask from "@/components/mask/Mask.vue";
 import BaseInput from "@/components/baseInput/BaseInput.vue";
 import { ElMessage } from "element-plus";
 import { login } from "@/api/user.js";
-import { setToken } from "@/utils/auth";
 
 const emit = defineEmits(["popup"]);
 
@@ -26,9 +25,7 @@ const loginHandle = async (close) => {
     account: account.value.inputValue,
     password: password.value.inputValue,
   });
-  console.log(res);
   if (res) {
-    setToken(res.token);
     close();
     ElMessage({
       type: "success",
@@ -90,36 +87,10 @@ const popup = (target, close) => {
           >
         </div>
         <div class="lg:flex lg:justify-evenly my-2 text-center">
-          <button
-            class="
-              px-10
-              py-2
-              mb-4
-              lg:mb-0
-              rounded
-              text-white
-              bg-yellow-800
-              transition-all
-              hover:opacity-80
-            "
-            @click.prevent="loginHandle(close)"
-          >
+          <button class="btn bg-yellow-800" @click.prevent="loginHandle(close)">
             登入
           </button>
-          <button
-            class="
-              px-10
-              py-2
-              rounded
-              text-white
-              bg-gray-400
-              transition-all
-              hover:opacity-80
-            "
-            @click.prevent="close"
-          >
-            取消
-          </button>
+          <button class="btn bg-gray-400" @click.prevent="close">取消</button>
         </div>
         <div
           class="
@@ -153,3 +124,9 @@ const popup = (target, close) => {
     </template>
   </Mask>
 </template>
+
+<style scoped>
+.btn {
+  @apply px-10 py-2 rounded text-white  transition-all hover:opacity-80;
+}
+</style>

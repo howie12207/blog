@@ -1,11 +1,14 @@
 import request from "@/utils/request";
+import { setToken } from "@/utils/auth";
 
-export function login(data) {
-  return request({
+export async function login(data) {
+  const res = await request({
     url: "/login",
     method: "post",
     data,
   });
+  if (res) setToken(res.token);
+  return res;
 }
 
 export function register(data) {
