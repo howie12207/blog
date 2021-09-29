@@ -6,19 +6,20 @@ import PopupRegister from "@/components/layouts/popup/PopupRegister.vue";
 import menu from "@/assets/navList.json";
 import { getToken } from "@/utils/auth";
 import { fetchUserInfo } from "@/api/user";
-
 onMounted(() => {
-  if (getToken()) getUserInfo();
+  if (isLogin.value) getUserInfo();
 });
 
 const getUserInfo = async () => {
   const { name } = await fetchUserInfo();
   username.value = name;
+  isLogin.value = true;
 };
 
+const isLogin = ref(getToken());
+
 const menuFilter = computed(() => {
-  if (getToken()) return menu.filter((item) => !item.notLogin);
-  return menu;
+  return isLogin.value ? menu.filter((item) => !item.notLogin) : menu;
 });
 
 const username = ref("");
