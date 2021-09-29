@@ -26,6 +26,7 @@ const currentChange = (page) => {
   const query = { page: page - 1, size: 10 };
   router.push({ query });
   getArticles(query);
+  window.scrollTo(0, 0);
 };
 </script>
 

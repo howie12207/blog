@@ -5,7 +5,7 @@ import BaseInput from "@/components/baseInput/BaseInput.vue";
 import { ElMessage } from "element-plus";
 import { login } from "@/api/user.js";
 
-const emit = defineEmits(["popup"]);
+const emit = defineEmits(["popup", "getUserInfo"]);
 
 const account = ref({
   inputValue: localStorage.getItem("account") || "",
@@ -32,6 +32,7 @@ const loginHandle = async (close) => {
       message: "登入成功",
       showClose: true,
     });
+    emit("getUserInfo");
   }
 };
 
@@ -102,7 +103,7 @@ const popup = (target, close) => {
             border-t-2 border-yellow-700
           "
         >
-          <span
+          <!-- <span
             class="
               text-base text-yellow-700
               cursor-pointer
@@ -111,7 +112,7 @@ const popup = (target, close) => {
             "
             @click="popup('forgetPassword', close)"
             >忘記密碼？</span
-          >
+          > -->
           <div>
             還沒有帳號？<span
               class="text-base text-yellow-700 cursor-pointer hover:underline"

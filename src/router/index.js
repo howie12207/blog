@@ -77,7 +77,6 @@ export const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  window.scrollTo(0, 0);
   const name = to.meta.name || "";
   document.title = `${name} | Howie's blog`;
   next();

@@ -32,6 +32,7 @@ const confirmPassword = ref({
     min: 6,
     max: 16,
   },
+  errMsg: "",
 });
 const name = ref({
   inputValue: "",
@@ -47,6 +48,8 @@ const email = ref({
     limit: "email",
   },
 });
+
+const emit = defineEmits(["getUserInfo"]);
 
 const registerHandle = async (close) => {
   if (!verify()) return;
@@ -68,6 +71,7 @@ const registerHandle = async (close) => {
       password: password.value.inputValue,
     });
     close();
+    emit("getUserInfo");
   }
 };
 const verify = () => {
@@ -80,6 +84,17 @@ const verify = () => {
       showClose: true,
     });
   return result;
+};
+
+const confirmPwd = (target) => {
+  if (target === "first" && confirmPassword.value.inputValue === "") return;
+  if (password.value.inputValue !== confirmPassword.value.inputValue) {
+    if (target === "first") confirmPassword.value.isValid = false;
+    confirmPassword.value.errMsg = "密碼不同";
+  } else {
+    if (target === "first") confirmPassword.value.isValid = true;
+    confirmPassword.value.errMsg = "";
+  }
 };
 </script>
 
@@ -104,6 +119,8 @@ const verify = () => {
           label="請輸入密碼"
           id="password"
           type="password"
+          @onBlur="confirmPwd('first')"
+          @onKeyup="confirmPwd('first')"
         />
         <BaseInput
           v-model:inputValue="confirmPassword.inputValue"
@@ -112,6 +129,9 @@ const verify = () => {
           label="請輸入確認密碼"
           id="confirmPassword"
           type="password"
+          @onBlur="confirmPwd"
+          @onKeyup="confirmPwd"
+          :errMsg="confirmPassword.errMsg"
         />
         <BaseInput
           v-model:inputValue="name.inputValue"

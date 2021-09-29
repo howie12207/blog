@@ -1,23 +1,27 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, computed, ref } from "vue";
 import IconMenu from "@/components/icon/IconMenu.vue";
 import PopupLogin from "@/components/layouts/popup/PopupLogin.vue";
 import PopupRegister from "@/components/layouts/popup/PopupRegister.vue";
 import menu from "@/assets/navList.json";
-// import { getToken } from "@/utils/auth";
-// import { fetchUserInfo } from "@/api/user";
+import { getToken } from "@/utils/auth";
+import { fetchUserInfo } from "@/api/user";
 
-// onMounted(() => {
-//   getUserInfo();
-// });
+onMounted(() => {
+  if (getToken()) getUserInfo();
+});
 
-// const getUserInfo = async() => {
-//   if (getToken()) {
-//   const {} = await fetchUserInfo()
-//   }
-// };
+const getUserInfo = async () => {
+  const { name } = await fetchUserInfo();
+  username.value = name;
+};
 
-const menuFilter = () => {};
+const menuFilter = computed(() => {
+  if (getToken()) return menu.filter((item) => !item.notLogin);
+  return menu;
+});
+
+const username = ref("");
 
 const popupOpen = ref("");
 const popup = (target) => {
@@ -57,7 +61,7 @@ const imgSrc = (src) => {
         <ul class="flex">
           <li
             class="font-black mx-1 transition-all hover:text-yellow-700"
-            v-for="item of menu"
+            v-for="item of menuFilter"
             :key="item.id"
           >
             <router-link
@@ -67,9 +71,15 @@ const imgSrc = (src) => {
               >{{ item.label }}</router-link
             >
           </li>
-          <li class="relative flex items-center font-black mx-1 transition-all">
-            <IconMenu class="hover:text-yellow-700" />
+          <li
+            class="font-black mx-1 transition-all bg-yellow-700"
+            v-if="username"
+          >
+            <span class="block px-2 py-4">{{ username }}</span>
           </li>
+          <!-- <li class="relative flex items-center font-black mx-1 transition-all">
+            <IconMenu class="hover:text-yellow-700" />
+          </li> -->
         </ul>
       </div>
     </header>
@@ -77,7 +87,12 @@ const imgSrc = (src) => {
       v-if="popupOpen === 'login'"
       @close="popup('')"
       @popup="popup"
+      @getUserInfo="getUserInfo"
     />
-    <PopupRegister v-else-if="popupOpen === 'register'" @close="popup('')" />
+    <PopupRegister
+      v-else-if="popupOpen === 'register'"
+      @close="popup('')"
+      @getUserInfo="getUserInfo"
+    />
   </div>
 </template>
