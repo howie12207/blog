@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { ElPagination } from "element-plus";
 import { fetchArticles } from "@/api/article";
+import { isDesktop } from "@/utils/common";
 import ArticleCard from "./ArticleCard.vue";
 
 const route = useRoute();
@@ -46,6 +47,8 @@ const currentChange = (page) => {
       background
       layout="prev, pager, next"
       :total="total"
+      :pager-count="5"
+      :small="!isDesktop()"
       @currentChange="currentChange"
     >
     </el-pagination>
