@@ -59,29 +59,34 @@ const imgSrc = (src) => {
         <router-link to="/"
           ><img class="w-8" :src="imgSrc('logo.png')" alt="logo" />
         </router-link>
-        <ul class="flex">
-          <li
-            class="font-black mx-1 transition-all hover:text-yellow-700"
-            v-for="item of menuFilter"
-            :key="item.id"
-          >
-            <router-link
-              class="block px-2 py-4"
-              :to="item.url"
-              @click="navClick(item.label)"
-              >{{ item.label }}</router-link
+        <nav>
+          <ul class="flex">
+            <li
+              :class="[
+                'relative font-black mx-1 transition-all hover:text-yellow-700',
+                $route.path.includes(item.url) && 'active',
+              ]"
+              v-for="item of menuFilter"
+              :key="item.id"
             >
-          </li>
-          <li
-            class="font-black mx-1 transition-all bg-yellow-700"
-            v-if="username"
-          >
-            <span class="block px-2 py-4">{{ username }}</span>
-          </li>
-          <!-- <li class="relative flex items-center font-black mx-1 transition-all">
+              <router-link
+                class="block px-2 py-4"
+                :to="item.url"
+                @click="navClick(item.label)"
+                >{{ item.label }}</router-link
+              >
+            </li>
+            <li
+              class="font-black mx-1 transition-all bg-yellow-700"
+              v-if="username"
+            >
+              <span class="block px-2 py-4">{{ username }}</span>
+            </li>
+            <!-- <li class="relative flex items-center font-black mx-1 transition-all">
             <IconMenu class="hover:text-yellow-700" />
           </li> -->
-        </ul>
+          </ul>
+        </nav>
       </div>
     </header>
     <PopupLogin
@@ -97,3 +102,10 @@ const imgSrc = (src) => {
     />
   </div>
 </template>
+
+<style scoped>
+.active::after {
+  content: "";
+  @apply absolute bottom-0 left-0 right-0 h-1 bg-yellow-800;
+}
+</style>
