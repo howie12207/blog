@@ -46,7 +46,7 @@ const imgSrc = (src) => {
             <SortsBox :tags="recent.sorts" />
           </div>
           <router-link
-            :to="`/articles/${recent._id}`"
+            :to="`/articles/${recent._id}?title=${recent.name}`"
             class="
               font-bold
               md:text-2xl

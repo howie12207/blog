@@ -27,7 +27,7 @@ defineProps({
       v-html="article.content"
     ></div>
     <router-link
-      :to="`/articles/${article._id}`"
+      :to="`/articles/${article._id}?title=${article.name}`"
       class="
         flex
         items-center

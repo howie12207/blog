@@ -77,7 +77,10 @@ export const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const name = to.meta.name || "";
+  const name = to.query.title || to.meta.name || "";
+  if (to.path.includes("articles") && to.query.title) {
+    to.meta.breadcrumbs[2] = { name: to.query.title };
+  }
   document.title = `${name} | Howie's blog`;
   next();
 });
