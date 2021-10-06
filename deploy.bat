@@ -1,3 +1,4 @@
+copy 404.html dist\
 cd dist
 git init 
 git add -A
