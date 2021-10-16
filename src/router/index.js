@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { checkAwake } from "@/api/user";
 
 import Home from "@/views/home/Home.vue";
 
@@ -63,6 +64,14 @@ export const router = createRouter({
       meta: {
         name: "Contact",
         breadcrumbs: [{ name: "Home", url: "/" }, { name: "Contact" }],
+      },
+    },
+    {
+      path: "/waiting",
+      component: () => import("@/views/waiting/Waiting.vue"),
+      meta: {
+        name: "Waiting for wake up",
+        blank: true,
       },
     },
     // {

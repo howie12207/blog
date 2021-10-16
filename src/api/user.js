@@ -26,3 +26,10 @@ export function fetchUserInfo(data) {
     data,
   });
 }
+
+export function checkAwake() {
+  return request({
+    url: "/connect",
+    method: "get",
+  });
+}
