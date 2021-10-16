@@ -5,19 +5,19 @@
     <link rel="icon" href="/blog/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title></title>
-    <script type="module" crossorigin src="/blog/assets/index.dbc56e7d.js"></script>
-    <link rel="modulepreload" href="/blog/assets/vendor.bc1fdf29.js">
+    <script type="module" crossorigin src="/blog/assets/index.bd56bd6b.js"></script>
+    <link rel="modulepreload" href="/blog/assets/vendor.7c19785e.js">
     <link rel="stylesheet" href="/blog/assets/vendor.290dfb7c.css">
-    <link rel="stylesheet" href="/blog/assets/index.e7b360d1.css">
+    <link rel="stylesheet" href="/blog/assets/index.a863c501.css">
   </head>
   <body>
     <div id="app"></div>
     
     <script>
       (function () {
-        var redirect = sessionStorage.redirect;
+        const redirect = sessionStorage.redirect;
         delete sessionStorage.redirect;
-        if (redirect && redirect != location.href) {
+        if (redirect && redirect !== location.href) {
           history.replaceState(null, null, redirect);
         }
       })();
