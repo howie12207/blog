@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineEmits } from "vue";
+import { ref } from "vue";
 import Mask from "@/components/mask/Mask.vue";
 import BaseInput from "@/components/baseInput/BaseInput.vue";
 import { ElMessage } from "element-plus";

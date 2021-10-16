@@ -10,7 +10,7 @@ const worksList = ref([]);
 
 const getWorksRecommend = async () => {
   const res = await fetchWorksRecommend();
-  worksList.value = res;
+  worksList.value = res.content;
 };
 
 const btns = ["Code", "Demo"];

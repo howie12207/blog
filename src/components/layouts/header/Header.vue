@@ -3,6 +3,7 @@ import { onMounted, computed, ref } from "vue";
 import IconMenu from "@/components/icon/IconMenu.vue";
 import PopupLogin from "@/components/layouts/popup/PopupLogin.vue";
 import PopupRegister from "@/components/layouts/popup/PopupRegister.vue";
+import PopupRightbar from "@/components/layouts/popup/PopupRightbar.vue";
 import menu from "@/assets/navList.json";
 import { getToken } from "@/utils/auth";
 import { fetchUserInfo } from "@/api/user";
@@ -24,7 +25,7 @@ const menuFilter = computed(() => {
 
 const username = ref("");
 
-const popupOpen = ref("");
+const popupOpen = ref(undefined);
 const popup = (target) => {
   popupOpen.value = target;
 };
@@ -59,12 +60,12 @@ const imgSrc = (src) => {
         <router-link to="/"
           ><img class="w-8" :src="imgSrc('logo.png')" alt="logo" />
         </router-link>
-        <nav>
+        <nav class="hidden sm:block">
           <ul class="flex">
             <li
               :class="[
                 'relative font-black mx-1 transition-all hover:text-yellow-700',
-                $route.path.includes(item.url) && 'active',
+                item.url && $route.path.includes(item.url) && 'active',
               ]"
               v-for="item of menuFilter"
               :key="item.id"
@@ -82,24 +83,38 @@ const imgSrc = (src) => {
             >
               <span class="block px-2 py-4">{{ username }}</span>
             </li>
-            <!-- <li class="relative flex items-center font-black mx-1 transition-all">
-            <IconMenu class="hover:text-yellow-700" />
-          </li> -->
           </ul>
         </nav>
+        <li
+          class="
+            relative
+            flex
+            md:hidden
+            items-center
+            font-black
+            mx-1
+            px-2
+            py-4
+            transition-all
+          "
+          @click="popup('rightbar')"
+        >
+          <IconMenu class="hover:text-yellow-700" />
+        </li>
       </div>
     </header>
     <PopupLogin
       v-if="popupOpen === 'login'"
-      @close="popup('')"
+      @close="popup"
       @popup="popup"
       @getUserInfo="getUserInfo"
     />
     <PopupRegister
       v-else-if="popupOpen === 'register'"
-      @close="popup('')"
+      @close="popup"
       @getUserInfo="getUserInfo"
     />
+    <PopupRightbar v-else-if="popupOpen === 'rightbar'" @close="popup" />
   </div>
 </template>
 

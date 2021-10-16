@@ -59,6 +59,7 @@ const style = computed(() => {
 .breadcrumbs {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 .breadcrumbs .breadcrumbs_item {
   position: relative;

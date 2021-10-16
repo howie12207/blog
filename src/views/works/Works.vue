@@ -10,7 +10,7 @@ const worksList = ref([]);
 
 const getWorks = async () => {
   const res = await fetchWorks();
-  worksList.value = res;
+  worksList.value = res.content;
 };
 </script>
 
