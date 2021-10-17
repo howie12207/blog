@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { ElPagination } from "element-plus";
 import { fetchArticles } from "@/api/article";
@@ -10,13 +10,14 @@ const route = useRoute();
 const router = useRouter();
 
 onMounted(() => {
-  getArticles(pageOptions.value);
+  window.addEventListener("popstate", popStateHandle);
+  getArticles();
 });
 
 const dataList = ref([]);
 const total = ref(0);
-const pageOptions = ref({ page: route.query.page || 0, size: 10 });
-const getArticles = async (query) => {
+const searchParams = ref({ page: route.query.page || 0, size: 10 });
+const getArticles = async (query = searchParams.value) => {
   const res = (await fetchArticles(query)) || {};
   dataList.value = res.content || [];
   total.value = res.totalElements || 0;
@@ -24,11 +25,22 @@ const getArticles = async (query) => {
 
 const currentPage = ref(Number(route.query.page) + 1 || 1);
 const currentChange = (page) => {
-  const query = { page: page - 1, size: 10 };
-  router.push({ query });
-  getArticles(query);
+  searchParams.value.page = page - 1;
+  router.push({ query: searchParams.value });
+  getArticles();
   window.scrollTo(0, 0);
 };
+
+const popStateHandle = () => {
+  const page = Number(route.query.page) + 1 || 1;
+  currentPage.value = page;
+  searchParams.value.page = page - 1;
+  getArticles();
+};
+
+onBeforeUnmount(() => {
+  window.removeEventListener("popstate", popStateHandle);
+});
 </script>
 
 <template>

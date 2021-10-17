@@ -3,19 +3,17 @@ import App from "./App.vue";
 import { router } from "./router";
 import "@/assets/index.css";
 import { checkAwake } from "@/api/user";
+import "element-plus/dist/index.css";
 
-let connect = false;
-
-const checkIsAwake = async () => {
+(async () => {
+  let connect = false;
   const res = await checkAwake();
   connect = res ? true : false;
-};
 
-await checkIsAwake();
+  createApp(App).use(router).mount("#app");
 
-createApp(App).use(router).mount("#app");
-
-if (!connect) {
-  sessionStorage.setItem("url", router.currentRoute.value.fullPath);
-  router.push("/waiting");
-}
+  if (!connect) {
+    sessionStorage.setItem("url", router.currentRoute.value.fullPath);
+    router.push("/waiting");
+  }
+})();
