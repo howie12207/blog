@@ -40,7 +40,7 @@ const imgSrc = (src) => {
         <div class="absolute text-white bottom-4 left-4">
           <div class="flex flex-wrap items-center gap-x-2 my-2">
             <span class="flex-shrink-0 w-18 text-xs">{{
-              toDateFormat(recent.updateTime)
+              toDateFormat(recent.createTime)
             }}</span>
             -
             <SortsBox :tags="recent.sorts" />

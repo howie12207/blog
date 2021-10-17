@@ -4,14 +4,17 @@ import { checkAwake } from "@/api/user";
 import { useRouter } from "vue-router";
 const router = useRouter();
 
+const check = async () => {
+  const res = await checkAwake();
+  if (res) {
+    const toRoute = sessionStorage.getItem("url") || "/";
+    router.push(toRoute);
+  }
+};
 let timer = null;
 onMounted(() => {
-  timer = setInterval(async () => {
-    const res = await checkAwake();
-    if (res) {
-      const toRoute = sessionStorage.getItem("url") || "/";
-      router.push(toRoute);
-    }
+  timer = setInterval(() => {
+    check();
   }, 6000);
 });
 onBeforeUnmount(() => {

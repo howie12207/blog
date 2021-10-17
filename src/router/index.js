@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { checkAwake } from "@/api/user";
 
 import Home from "@/views/home/Home.vue";
 
