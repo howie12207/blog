@@ -1,0 +1,1 @@
+import{P as o}from"./vendor.79ee6203.js";const e=o=>Math.pow(o,3),t=o=>o<.5?e(2*o)/2:1-e(2*(1-o))/2,n=o(document.documentElement),a=o=>{const e=Date.now(),a=n.value.scrollTop,s=()=>{const r=(Date.now()-e)/500;r<1?(n.value.scrollTop=a*(1-t(r))+o*t(r),requestAnimationFrame(s)):n.value.scrollTop=o};requestAnimationFrame(s)};export{a as s};
